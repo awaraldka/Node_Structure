@@ -1,3 +1,4 @@
+import { query } from 'express';
 import userModel from '../../models/user';
 
 
@@ -11,6 +12,10 @@ export const userServices = {
         } catch (error) {
             throw error;
         }
+    },
+
+    findAllUsers: async (query) => {
+        return await userModel.find(query);
     },
 
     createUser: async (insertObj) => {
@@ -27,6 +32,16 @@ export const userServices = {
     findUser: async (query) => {
         return await userModel.findById(query).select(
             "-otp -password -otpTime -deviceToken");
+    },
+
+    findStudent: async (query) => {
+        return await userModel.findById(query).select(
+            "-otp -password -otpTime -deviceToken -assignedStudents -experience -expertiseInSubjects");
+    },
+
+    findTeacher: async (query) => {
+        return await userModel.findById(query).select(
+            "-otp -password -otpTime -deviceToken -mothername -fathername -mobileNumber -assignedTeacher");
     },
 
 

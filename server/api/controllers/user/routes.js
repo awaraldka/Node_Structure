@@ -6,16 +6,22 @@ import auth from '../../../helper/auth';
 
 export default Express.Router()
 
-    .post('/loginUser',userController.loginUser)
+    .post('/login',userController.login)
     .get('/verifyOTP',userController.verifyOTP)
     .get('/resendOTP',userController.resendOTP)
     .get('/forgotPassword',userController.forgotPassword)
     .put('/resetPassword',userController.resetPassword)
-    .post('/signUp',upload.uploadFile,userController.userSignUp)
 
+    .post('/studentSignUp',upload.uploadFile,userController.studentSignUp)
+    .post('/teacherSignUp',upload.uploadFile,userController.teacherSignUp)
 
     .use(auth.verifyToken)
     .get('/userProfile', userController.userProfile)
     .put('/changePassword',userController.changePassword)
+    .post('/logout',userController.logout)
     .delete('/deleteAccount',userController.deleteAccount)
-    .post('/updateProfile',upload.uploadFile,userController.updateProfile)
+    
+
+    .use(upload.uploadFile)
+    .post('/updateStudentProfile',userController.updateStudentProfile)
+    .post('/updateTeacherProfile',userController.updateTeacherProfile)
